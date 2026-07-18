@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rock Paper Scissors</title>
+  </head>
+  <body>
+    <p>Rock Paper Scissors</p>
+    <button onclick="playGame('rock')">Rock</button>
+    <button onclick="playGame('paper')">Paper</button>
+    <button onclick="playGame('scissors')">Scissors</button>
+    <script>
+      function playGame(userMove) {
+        const computerMove = generateComputerMove();
+
+        let result;
+        if (userMove === computerMove) {
+          result = 'It\'s a tie';
+        } else if (
+          (userMove === 'rock' && computerMove === 'paper') ||
+          (userMove === 'paper' && computerMove === 'scissors') || 
+          (userMove === 'scissors' && computerMove === 'rock')
+        ) {
+          result = 'Computer won';
+        } else {
+          result = 'You won';
+        }
+        
+        alert(`You chose ${userMove}. Computer chose ${computerMove}. ${result}.`)
+      }
+
+      const moves = ['rock', 'paper', 'scissors'];
+      function generateComputerMove() {
+        randomNumber = Math.floor(Math.random() * 3);
+        return moves[randomNumber];
+      }
+
+    </script>
+  </body>
+</html>
