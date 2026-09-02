@@ -28,9 +28,39 @@ public class AlienResource {
     @POST
     @Path("alien")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Alien createAlien(Alien alien) {
         System.out.println("AlienResource.createAlien() called with alien: " + alien);
         repo.create(alien);
+        return alien;
+    }
+
+    @PUT
+    @Path("alien")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Alien updateAlien(Alien alien) {
+        System.out.println("AlienResource.updateAlien() called with alien: " + alien);
+
+        if(repo.getAlien(alien.getId()) == null) {
+            repo.create(alien);
+        } else {
+            repo.update(alien);
+        }
+
+        repo.update(alien);
+        return alien;
+    }
+
+    @DELETE
+    @Path("alien/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Alien deleteAlien(@PathParam("id") int id) {
+        System.out.println("AlienResource.deleteAlien() called with id: " + id);
+        Alien alien = repo.getAlien(id);
+        if (alien != null) {
+            repo.delete(id);
+        }
         return alien;
     }
 }
