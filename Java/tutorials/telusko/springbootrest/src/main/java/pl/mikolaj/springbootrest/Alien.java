@@ -1,6 +1,13 @@
 package pl.mikolaj.springbootrest;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "alien")
 public class Alien {
+    @Id
     private int id;
     private String name;
     private int points;
@@ -38,6 +45,7 @@ public class Alien {
         this.points = points;
     }
 
+    @Override
     public String toString() {
         return "Alien{id=" + id + ", name='" + name + "', points=" + points + "}";
     }
