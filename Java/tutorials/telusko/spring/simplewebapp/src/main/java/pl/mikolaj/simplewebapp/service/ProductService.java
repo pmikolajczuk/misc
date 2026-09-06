@@ -1,38 +1,37 @@
 package pl.mikolaj.simplewebapp.service;
 
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 import pl.mikolaj.simplewebapp.model.Product;
+import pl.mikolaj.simplewebapp.repository.ProductRepo;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 @Service
 public class ProductService {
-    List<Product> products = new ArrayList<>(List.of(
-            new Product(101, "iPhone", 100),
-            new Product(201, "Samsung", 200),
-            new Product(301, "Google Pixel", 300)
-    ));
+
+    private final ProductRepo repo;
+
+    public ProductService(ProductRepo repo) {
+        this.repo = repo;
+    }
+
+    public List<Product> getAllProducts() {
+        return repo.findAll();
+    }
 
     public Product getProductById(int id) {
-        return products.stream()
-                .filter(p -> p.getId() == id)
-                .findFirst()
-                .orElse(null);
+        return repo.findById(id).orElse(null);
     }
 
     public void createProduct(Product product) {
-        products.add(product);
+        repo.save(product);
     }
 
     public void updateProduct(Product product) {
-        products.removeIf(p -> p.getId() == product.getId());
-        products.add(product);
+        repo.save(product);
     }
 
     public void deleteProduct(int id) {
-        products.removeIf(p -> p.getId() == id);
+        repo.deleteById(id);
     }
 }
