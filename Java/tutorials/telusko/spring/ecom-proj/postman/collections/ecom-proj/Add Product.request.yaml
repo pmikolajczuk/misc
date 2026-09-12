@@ -1,0 +1,18 @@
+$kind: http-request
+method: POST
+url: "{{baseUrl}}/api/product"
+order: 3000
+body:
+  type: formdata
+  content:
+    - type: text
+      key: product
+      value: '{"name":"Sample Product","desc":"A sample product description","brand":"SampleBrand","price":29.99,"category":"Electronics","releaseDate":"2024-01-01","available":true,"stockQuantity":100}'
+      contentType: application/json
+      disabled: false
+    - type: file
+      key: imageFile
+      src:
+        - /C:/Users/piotr/Desktop/samsung_phone.webp
+      description: Product image file
+      disabled: false

@@ -1,0 +1,20 @@
+$kind: http-request
+method: PUT
+url: "{{baseUrl}}/api/product"
+order: 4000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "id": 1,
+      "name": "Updated Product",
+      "desc": "An updated product description",
+      "brand": "UpdatedBrand",
+      "price": 39.99,
+      "category": "Electronics",
+      "releaseDate": "2024-01-01",
+      "available": true,
+      "stockQuantity": 50
+    }
