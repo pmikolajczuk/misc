@@ -177,41 +177,63 @@ class ProductControllerTest {
     @Test
     void updatesProductSuccessfully() throws Exception {
         Product product = createTestProduct(1, "Updated Mouse", new BigDecimal("34.99"));
+        when(productService.updateProduct(1, product, null)).thenReturn(product);
 
-        ResponseEntity<String> response = productController.updateProduct(product);
+        ResponseEntity<?> response = productController.updateProduct(1, product, null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Product updated successfully", response.getBody());
-        verify(productService, times(1)).updateProduct(product);
+        assertEquals(product, response.getBody());
+        verify(productService, times(1)).updateProduct(1, product, null);
     }
 
     @Test
     void updatesProductAvailabilityStatus() throws Exception {
         Product product = createTestProduct(3, "Product", new BigDecimal("99.99"));
         product.setAvailable(false);
+        when(productService.updateProduct(3, product, null)).thenReturn(product);
 
-        ResponseEntity<String> response = productController.updateProduct(product);
+        ResponseEntity<?> response = productController.updateProduct(3, product, null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(productService, times(1)).updateProduct(product);
+        verify(productService, times(1)).updateProduct(3, product, null);
     }
 
     @Test
     void deletesProductSuccessfully() throws Exception {
+        Product product = createTestProduct(1, "Mouse", new BigDecimal("29.99"));
+        when(productService.getProductById(1)).thenReturn(product);
+
         ResponseEntity<String> response = productController.deleteProduct(1);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Product deleted successfully", response.getBody());
+        verify(productService, times(1)).getProductById(1);
         verify(productService, times(1)).deleteProduct(1);
     }
 
     @Test
     void deletesProductWithDifferentId() throws Exception {
+        Product product = createTestProduct(100, "Monitor", new BigDecimal("199.99"));
+        when(productService.getProductById(100)).thenReturn(product);
+
         ResponseEntity<String> response = productController.deleteProduct(100);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Product deleted successfully", response.getBody());
+        verify(productService, times(1)).getProductById(100);
         verify(productService, times(1)).deleteProduct(100);
+    }
+
+    @Test
+    void returnsNotFoundWhenDeletingMissingProduct() throws Exception {
+        when(productService.getProductById(999)).thenReturn(null);
+
+        ResponseEntity<String> response = productController.deleteProduct(999);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+        verify(productService, times(1)).getProductById(999);
+        verify(productService, never()).deleteProduct(999);
     }
 
     @Test
@@ -271,8 +293,10 @@ class ProductControllerTest {
     void deletesProductWithNegativeIdPassedToService() throws Exception {
         ResponseEntity<String> response = productController.deleteProduct(-1);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(productService, times(1)).deleteProduct(-1);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+        verify(productService, never()).getProductById(anyInt());
+        verify(productService, never()).deleteProduct(anyInt());
     }
 }
 

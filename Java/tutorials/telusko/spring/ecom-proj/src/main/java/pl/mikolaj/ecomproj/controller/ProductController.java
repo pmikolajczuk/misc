@@ -55,11 +55,18 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/product")
-    public ResponseEntity<String> updateProduct(@RequestBody Product product) {
-        productService.updateProduct(product);
-        return ResponseEntity.ok("Product updated successfully");
-
+    @PutMapping("/product/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable int id,
+                                           @RequestPart Product product,
+                                           @RequestPart MultipartFile imageFile) {
+        try {
+            Product updatedProduct = productService.updateProduct(id, product, imageFile);
+            return updatedProduct != null ?
+                    ResponseEntity.ok(updatedProduct) :
+                    ResponseEntity.notFound().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Error updating product: " + e.getMessage());
+        }
     }
     
     @GetMapping("/product/{id}/image")
@@ -80,6 +87,10 @@ public class ProductController {
 
     @DeleteMapping("/product/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+        if (id <= 0 || productService.getProductById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         productService.deleteProduct(id);
         return ResponseEntity.ok("Product deleted successfully");
     }
