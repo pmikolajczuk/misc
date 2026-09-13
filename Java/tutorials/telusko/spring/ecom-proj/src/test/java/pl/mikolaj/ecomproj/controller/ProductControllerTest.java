@@ -50,12 +50,12 @@ class ProductControllerTest {
         Product product = new Product();
         product.setId(id);
         product.setName(name);
-        product.setDesc("Test description");
+        product.setDescription("Test description");
         product.setBrand("Test brand");
         product.setPrice(price);
         product.setCategory("Test category");
         product.setReleaseDate(new Date());
-        product.setAvailable(true);
+        product.setProductAvailable(true);
         product.setStockQuantity(10);
         return product;
     }
@@ -147,7 +147,7 @@ class ProductControllerTest {
     void createsProductWithAllFields() throws Exception {
         Product product = createTestProduct(0, "Keyboard", new BigDecimal("79.99"));
         product.setStockQuantity(50);
-        product.setAvailable(true);
+        product.setProductAvailable(true);
         product.setCategory("Electronics");
         MultipartFile image = createImage();
 
@@ -189,7 +189,7 @@ class ProductControllerTest {
     @Test
     void updatesProductAvailabilityStatus() throws Exception {
         Product product = createTestProduct(3, "Product", new BigDecimal("99.99"));
-        product.setAvailable(false);
+        product.setProductAvailable(false);
         when(productService.updateProduct(3, product, null)).thenReturn(product);
 
         ResponseEntity<?> response = productController.updateProduct(3, product, null);

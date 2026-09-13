@@ -7,7 +7,7 @@ body:
   content:
     - type: text
       key: product
-      value: '{"name":"Sample Product","desc":"A sample product description","brand":"SampleBrand","price":29.99,"category":"Electronics","releaseDate":"2024-01-01","available":true,"stockQuantity":100}'
+      value: '{"name":"Sample Product","description":"A sample product description","brand":"SampleBrand","price":29.99,"category":"Electronics","releaseDate":"2024-01-01","productAvailable":true,"stockQuantity":100}'
       contentType: application/json
       disabled: false
     - type: file

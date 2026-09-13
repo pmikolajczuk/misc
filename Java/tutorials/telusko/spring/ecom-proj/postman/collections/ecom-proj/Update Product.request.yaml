@@ -9,19 +9,19 @@ body:
   content:
     - type: text
       key: product
-      contentType: application/json
       value: |-
         {
           "id": 1,
           "name": "Updated Product",
-          "desc": "An updated product description",
+          "description": "An updated product description",
           "brand": "UpdatedBrand",
           "price": 39.99,
           "category": "Electronics",
           "releaseDate": "2024-01-01",
-          "available": true,
+          "productAvailable": true,
           "stockQuantity": 50
         }
+      contentType: application/json
       description: ""
       disabled: false
     - type: file
