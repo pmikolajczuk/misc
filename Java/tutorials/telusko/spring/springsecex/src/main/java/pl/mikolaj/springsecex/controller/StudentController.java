@@ -1,8 +1,7 @@
-package pl.mikolaj.springsecex;
+package pl.mikolaj.springsecex.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
+import pl.mikolaj.springsecex.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;

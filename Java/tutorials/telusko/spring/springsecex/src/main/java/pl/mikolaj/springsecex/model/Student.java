@@ -1,4 +1,4 @@
-package pl.mikolaj.springsecex;
+package pl.mikolaj.springsecex.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

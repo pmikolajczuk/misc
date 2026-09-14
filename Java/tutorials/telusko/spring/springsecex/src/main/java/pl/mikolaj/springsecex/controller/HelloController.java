@@ -1,4 +1,4 @@
-package pl.mikolaj.springsecex;
+package pl.mikolaj.springsecex.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
