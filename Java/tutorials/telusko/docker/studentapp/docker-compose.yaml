@@ -1,0 +1,24 @@
+services:
+  app:
+        build: .
+        ports:
+            - "8080:8080"
+        environment:
+            - DB_URL=jdbc:postgresql://postgres:5432/studentapp
+            - DB_USERNAME=postgres
+            - DB_PASSWORD=haswo
+        depends_on:
+            - postgres
+  postgres:
+        image: postgres:latest
+        environment:
+            - POSTGRES_DB=studentapp
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=haswo
+        ports:
+            - "5433:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql
+
+volumes:
+    postgres_data:
